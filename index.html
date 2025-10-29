@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Os melhores hambúrguers e fast food com entrega rápida. Mix de molhos exclusivos e sabores incríveis.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <title>Financila capital</title>
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --color-primary: #E6540F;
+      --color-secondary: #f68704;
+      --color-accent: #f66e13;
+      --color-dark: #1a1a1a;
+      --color-text: #4a4a4a;
+      --color-text-light: #666;
+      --color-light: #f9f9f9;
+      --color-white: #ffffff;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+      --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.2);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --border-radius: 16px;
+      --gradient-primary: linear-gradient(135deg, var(--color-secondary), var(--color-accent));
+      --color-one: #0946ec;
+      --color-two: #527fd4;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: var(--color-text);
+      background-color: var(--color-white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    /* Header */
+    .header {
+      background-color: #0946ec;
+      padding: 1rem 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 1002;
+    }
+
+    .logo i {
+      font-size: 2rem;
+    }
+
+    /* Menu Toggle Button */
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      cursor: pointer;
+      padding: 0.5rem;
+      transition: transform 0.3s ease;
+      z-index: 1002;
+    }
+
+    .menu-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .menu-toggle.active .fa-bars {
+      display: none;
+    }
+
+    .menu-toggle.active::before {
+      content: "\f00d";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      display: block;
+    }
+
+    nav ul li a:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: clamp(400px, 60vh, 700px);
+      overflow: hidden;
+      background: var(--color-dark);
+      margin-bottom: 60px;
+    }
+
+    .hero img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      z-index: 1;
+    }
+
+    .hero img.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+      z-index: 3;
+      pointer-events: none;
+    }
+    
+    /* Dots Navigation */
+    .dots {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 4;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .dot:hover {
+      background: rgba(255, 255, 255, 0.8);
+      transform: scale(1.1);
+    }
+
+    .dot.active {
+      background: var(--color-primary);
+      border-color: var(--color-white);
+      transform: scale(1.3);
+      box-shadow: 0 0 12px #0946ec;
+    }
+
+    /* Welcome Section */
+    .welcome-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(40px, 8vw, 80px) 5%;
+      text-align: center;
+    }
+
+    .welcome-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 24px;
+      background: #0946ec;
+      border: 2px solid rgba(230, 84, 15, 0.2);
+      border-radius: 50px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 24px;
+      animation: pulse 3s infinite;
+    }
+
+    .welcome-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: var(--color-dark);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .welcome-text {
+      font-size: clamp(16px, 2vw, 18px);
+      color: var(--color-text-light);
+      line-height: 1.8;
+      max-width: 900px;
+      margin: 0 auto 40px;
+    }
+
+    .features-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .feature-item {
+      padding: 30px 20px;
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--color-primary);
+    }
+
+    .feature-icon {
+      width: 70px;
+      height: 70px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--color-white);
+      font-size: 32px;
+      box-shadow: 0 8px 24px rgba(230, 84, 15, 0.3);
+    }
+
+    .feature-item h3 {
+      font-size: 1.3rem;
+      color: var(--color-dark);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .feature-item p {
+      color: var(--color-text-light);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Products Section */
+    .products-section {
+      background: var(--color-light);
+      padding: clamp(50px, 8vw, 100px) 5%;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--color-dark);
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: clamp(16px, 2vw, 18px);
+      color: var(--color-text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+     /* ========== TEAM SCROLL ========== */
+    .team-section { background:var(--light-gray); overflow:hidden; padding: 60px 0; }
+    .team-scroll-container { overflow:hidden; position:relative; margin-top:10px; }
+    .team-grid {
+      display:flex; gap:30px; animation: scroll-horizontal 24s linear infinite;
+      width: max-content; padding-bottom: 10px;
+    }
+    .team-grid:hover { animation-play-state: paused; }
+    @keyframes scroll-horizontal { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+    .team-card { background:var(--light);  padding:30px; text-align:center; box-shadow:var(--shadow); transition:var(--transition); min-width:300px; flex-shrink:0; }
+    .team-card img { width:200px;   object-fit:cover; margin-bottom:20px;  transition:var(--transition); }
+    .team-card:hover img { transform:scale(1.08); border-color:var(--accent-blue); }
+    .team-card h3 { color:var(--secondary-blue); margin-bottom:10px; font-size:1.3rem; }
+    .team-card p { color:var(--gray); font-size:0.9rem; }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+      gap: clamp(24px, 4vw, 40px);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--color-white);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      border: 2px solid transparent;
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: var(--shadow-xl);
+      border-color: #0946ec;
+    }
+
+    .card-image {
+      position: relative;
+      overflow: hidden;
+      
+    }
+
+    .card img {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .card:hover img {
+      transform: scale(1.1) rotate(2deg);
+    }
+
+    .card-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #0946ec;
+      color: var(--color-white);
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 13px;
+      z-index: 2;
+      box-shadow: var(--shadow-md);
+    }
+
+    .card-content {
+      padding: clamp(20px, 4vw, 32px);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-content h3 {
+      font-size: clamp(20px, 3vw, 24px);
+      color: var(--color-dark);
+      margin-bottom: 12px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    .divider {
+      width: 60px;
+      height: 4px;
+      background: #0946ec;
+      margin: 0 0 16px;
+      border-radius: 2px;
+    }
+
+    .card-content p {
+      color: var(--color-text-light);
+      font-size: clamp(15px, 1.8vw, 16px);
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 16px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .card-price {
+      font-size: 24px;
+      font-weight: 900;
+      color: #0946ec;
+    }
+
+    .card-btn {
+      padding: 10px 20px;
+      background: #0946ec;
+      color: var(--color-white);
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 14px;
+    }
+
+    .card-btn:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* Social Icons */
+    .social-section {
+      padding: clamp(40px, 8vw, 80px) 5%;
+      text-align: center;
+      background: var(--color-white);
+    }
+
+    .social-section h2 {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: var(--color-dark);
+      margin-bottom: 16px;
+    }
+
+    .social-section p {
+      color: var(--color-text-light);
+      margin-bottom: 40px;
+      font-size: clamp(15px, 2vw, 17px);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      width: 60px;
+      height: 60px;
+      border: 2px solid #0946ec;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+      font-size: 24px;
+      transition: var(--transition);
+      text-decoration: none;
+      background: var(--color-white);
+    }
+
+    .social-icons a:hover {
+      background: #0946ec;
+      color: var(--color-white);
+      border-color: transparent;
+      transform: translateY(-6px) scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--color-dark);
+      color: var(--color-white);
+      padding: clamp(40px, 6vw, 80px) 5% 30px;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: clamp(30px, 5vw, 50px);
+      margin-bottom: 40px;
+    }
+
+    .footer-column h4 {
+      margin-bottom: 20px;
+      color: var(--color-primary);
+      font-size: clamp(18px, 2.5vw, 22px);
+      font-weight: 800;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* Scroll Top Button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 56px;
+      height: 56px;
+      background: #0946ec;
+      color: var(--color-white);
+      border: none;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 22px;
+      z-index: 999;
+      box-shadow: var(--shadow-lg);
+      transition: var(--transition);
+    }
+
+    #scrollTopBtn:hover {
+      transform: scale(1.15) translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.9; transform: scale(1.05); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .features-row {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 24px;
+      }
+      
+      .container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 15px 5%;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+      }
+
+      .logo i {
+        font-size: 1.7rem;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: min(320px, 85vw);
+        height: 100vh;
+        background: var(--color-white);
+        box-shadow: var(--shadow-xl);
+        transition: right 0.3s ease;
+        z-index: 1001;
+      }
+
+      nav.active {
+        right: 0;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 0;
+        padding: 80px 20px 30px;
+        height: 100%;
+        overflow-y: auto;
+      }
+
+      nav ul li {
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      nav ul li a {
+        color: var(--color-dark);
+        padding: 16px 12px;
+        font-size: 16px;
+      }
+
+      nav ul li a:hover {
+        background: rgba(230, 84, 15, 0.1);
+        color: var(--color-primary);
+      }
+
+      /* Overlay */
+      body.menu-open::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .hero {
+        height: clamp(350px, 50vh, 500px);
+      }
+
+      .dots {
+        bottom: 20px;
+        gap: 10px;
+        padding: 10px 16px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+      }
+
+      .card-image {
+        height: 240px;
+      }
+
+      .features-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      #scrollTopBtn {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        height: clamp(300px, 45vh, 400px);
+        margin-bottom: 40px;
+      }
+
+      .card-image {
+        
+      }
+
+      .social-icons a {
+        width: 52px;
+        height: 52px;
+        font-size: 20px;
+      }
+
+      .feature-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+      }
+
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .card-image {
+       
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <i class="fas fa-briefcase"></i>
+      FINANCIAL CAPITAL MANAGERS
+    </div>
+    
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    
+    <nav id="nav">
+      <ul id="menu">
+        <li><a href="#">HOME</a></li>
+        <li><a href="#">CONTACTO</a></li>
+        <li><a href="#">SOBRE</a></li>
+     
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Slider -->
+  <div class="hero" id="home">
+    <img src="Demo.png" alt="Hambúrguer Delicioso" class="active">
+    <img src="img5.jpeg" alt="Combo Premium">
+    <img src="Demo.png" alt="Hambúrguer Gourmet">
+    <img src="img20.jpg" alt="Hambúrguer Gourmet">
+    
+    <div class="dots"></div>
+  </div>
+
+  <!-- Welcome Section -->
+  <section class="welcome-section">
+    <div class="welcome-badge">
+      <i class="fas fa-star"></i>
+      Consultoria de contabilidade
+    </div>
+    
+    <h1 class="welcome-title">FINANCIAL CAPITAL MANAGERS</h1>
+    
+    <p class="welcome-text">
+    Acreditamos que por conta da disciplina e organização é possível oferecer soluções aos desafios enfrentados pelos nossos clientes, garantindo uma gestão que se mostre eficiente e um capital que se torne rentável.
+    </p>
+       <h2>Nossos Clientes</h2>
+    <!-- TEAM -->
+  <section id="team" class="section team-section">
+    <div class="container">
+      <div class="team-scroll-container">
+        <div class="team-grid">
+          <div class="team-card reveal" data-reveal>
+            <img src="img11.png" alt="Membro da Equipa 1">
+            
+          </div>
+
+          <div class="team-card reveal" data-reveal>
+            <img src="img12.png" alt="Membro da Equipa 2">
+            
+          </div>
+
+          <div class="team-card reveal" data-reveal>
+            <img src="img13.jpeg" alt="Membro da Equipa 3">
+            
+          </div>
+
+          <div class="team-card reveal" data-reveal>
+            <img src="img14.png" alt="Membro da Equipa 4">
+           
+          </div>
+
+          <div class="team-card reveal" data-reveal>
+            <img src="img15.png" alt="Membro da Equipa 4">
+           
+          </div>
+
+          <!-- duplicates to create scroll effect -->
+          <div class="team-card reveal" data-reveal>
+            <img src="img18.jpeg" alt="Membro da Equipa 1">
+          </div>
+          <div class="team-card reveal" data-reveal>
+            <img src="img16.jpeg" alt="Membro da Equipa 2">
+          </div>
+          <div class="team-card reveal" data-reveal>
+            <img src="img17.jpeg" alt="Membro da Equipa 2">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="products-section" id="cardapio">
+    <div class="section-header">
+      <h2>Destaques</h2>
+      <p>Confira nossas especialidades e aproveite o melhor para a sua empresa</p>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-image">
+          <img src="img10 (1).jpg" alt="Mix de Molhos Premium">
+          <div class="card-badge">Destaque</div>
+        </div>
+        <div class="card-content">
+          <h3>Parceria</h3>
+          <div class="divider"></div>
+          <p>Estivemos reunidos com Jose Sousa, que nos abordou sobre a importância de elementos padrão nos reportes financeiros e tradução de dados em forma de KPIs..</p>
+          <div class="card-footer">
+            <span class="card-price">FCM</span>
+            <button class="card-btn">Ler mais</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">
+          <img src="img10 (6).jpg" alt="Cachorro Quente Especial">
+          <div class="card-badge">Destaque</div>
+        </div>
+        <div class="card-content">
+          <h3>Relatórios de Desempenho</h3>
+          <div class="divider"></div>
+          <p>É uma cultura nossa a constante apresentação de Relatórios de Desempenho para os nossos clientes, de formas a garantir sua inteira interpretação e entendimento dos dados do negócio..</p>
+          <div class="card-footer">
+            <span class="card-price">FCM</span>
+            <button class="card-btn">Ler mais</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-image">
+          <img src="img10 (7).jpg" alt="Kit Completo">
+          <div class="card-badge">Destaque</div>
+        </div>
+        <div class="card-content">
+          <h3>Capital Humano</h3>
+          <div class="divider"></div>
+          <p>Os nossos trabalhos são desenvolvidos em equipa, que com bases assentes nos nossos valores como Disciplina e Organização, procuramos dar o nosso melhor em prol da satisfação das necessidades dos nossos clientes..</p>
+          <div class="card-footer">
+            <span class="card-price">FCM</span>
+            <button class="card-btn">Ler mais</button>
+          </div>
+        </div>
+      </div>
+
+     
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Section -->
+  <section class="social-section">
+    <h2>Siga-nos nas Redes Sociais</h2>
+    <p>Fique por dentro das novidades e promoções exclusivas</p>
+    
+    <div class="social-icons">
+      <a href="#" aria-label="Facebook" title="Facebook">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+     
+      <a href="#" aria-label="Instagram" title="Instagram">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="#" aria-label="LinkedIn" title="LinkedIn">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+     
+    </div>
+  </section>
+
+  <!-- Footer -->
+  
+
+  <!-- Scroll Top Button -->
+  <button id="scrollTopBtn" aria-label="Voltar ao topo">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <script>
+    // Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const nav = document.getElementById('nav');
+    const body = document.body;
+    const menuLinks = document.querySelectorAll('#menu a');
+
+    // Toggle menu ao clicar no botão
+    menuToggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      nav.classList.toggle('active');
+      menuToggle.classList.toggle('active');
+      body.classList.toggle('menu-open');
+    });
+
+    // Fechar menu ao clicar em um link
+    menuLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        nav.classList.remove('active');
+        menuToggle.classList.remove('active');
+        body.classList.remove('menu-open');
+      });
+    });
+
+    // Fechar menu ao clicar fora dele
+    document.addEventListener('click', function(event) {
+      const isClickInsideNav = nav.contains(event.target);
+      const isClickOnToggle = menuToggle.contains(event.target);
+      
+      if (!isClickInsideNav && !isClickOnToggle && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        menuToggle.classList.remove('active');
+        body.classList.remove('menu-open');
+      }
+    });
+
+    // Fechar menu ao pressionar ESC
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && nav.classList.contains('active')) {
+        nav.classList.remove('active');
+        menuToggle.classList.remove('active');
+        body.classList.remove('menu-open');
+      }
+    });
+
+    // Hero Slider
+    const images = document.querySelectorAll('.hero img');
+    const dotsContainer = document.querySelector('.dots');
+    let currentIndex = 0;
+    let sliderInterval;
+
+    // Criar dots
+    images.forEach((_, index) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    function goToSlide(index) {
+      images[currentIndex].classList.remove('active');
+      dots[currentIndex].classList.remove('active');
+      
+      currentIndex = index;
+      
+      images[currentIndex].classList.add('active');
+      dots[currentIndex].classList.add('active');
+      
+      resetInterval();
+    }
+
+    function nextSlide() {
+      const nextIndex = (currentIndex + 1) % images.length;
+      goToSlide(nextIndex);
+    }
+
+    function startSlider() {
+      sliderInterval = setInterval(nextSlide, 4000);
+    }
+
+    function resetInterval() {
+      clearInterval(sliderInterval);
+      startSlider();
+    }
+
+    startSlider();
+
+    // Scroll Top Button
+    const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+    window.addEventListener('scroll', function() {
+      if (window.pageYOffset > 300) {
+        scrollTopBtn.style.display = 'flex';
+      } else {
+        scrollTopBtn.style.display = 'none';
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Card Buttons
+    const cardButtons = document.querySelectorAll('.card-btn');
+    cardButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        alert('Pedido em processamento! Em breve entraremos em contato.');
+      });
+    });
+
+
+     // ---------- Top progress bar (scroll) ----------
+    function updateTopProgress() {
+      const scrolled = window.scrollY || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const pct = (scrolled / (height || 1)) * 100;
+      progressTop.style.width = Math.min(Math.max(pct, 0), 100) + '%';
+    }
+    window.addEventListener('scroll', updateTopProgress, { passive: true });
+    window.addEventListener('resize', updateTopProgress);
+
+    // ---------- Scroll reveal (IntersectionObserver) ----------
+    // Aplica efeito intenso (zoom + blur fade) em todos os elementos com data-reveal
+    const revealElements = Array.from(document.querySelectorAll('[data-reveal]'));
+
+    function initReveal() {
+      // safety - if no elements, nothing to do
+      if (!revealElements.length) return;
+
+      const options = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: [0, 0.1, 0.2, 0.4]
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const el = entry.target;
+          if (entry.intersectionRatio > 0.12) {
+            // adiciona classe com pequeno delay baseado na posição para stagger
+            const delay = Math.min(Math.abs(entry.boundingClientRect.top) / 1200, 0.45);
+            el.style.transitionDelay = (delay * 0.6) + 's';
+            el.classList.add('revealed');
+          } else {
+            // remove para permitir animação reversível ao subir/descer
+            el.classList.remove('revealed');
+            el.style.transitionDelay = '';
+          }
+        });
+      }, options);
+
+      revealElements.forEach(el => {
+        // aplica classe base .reveal se não existir (compatibilidade)
+        if (!el.classList.contains('reveal')) el.classList.add('reveal');
+        observer.observe(el);
+      });
+    }
+
+    // Inicializa reveal imediato se load já ocorreu (caso de cache)
+    if (document.readyState === 'complete') {
+      setTimeout(() => {
+        loadingBar.style.width = '100%';
+        loadingScreen.classList.add('hidden');
+        initReveal();
+      }, 300);
+    }
+
+    // ---------- small enhancement: keyboard navigation between sections ----------
+    document.addEventListener('keydown', function(e) {
+      if (['ArrowDown','PageDown','ArrowUp','PageUp'].includes(e.key)) {
+        const sections = Array.from(document.querySelectorAll('section, main, footer'));
+        const scrollPos = window.scrollY;
+        let currentIndex = 0;
+        sections.forEach((s, i) => {
+          if (s.offsetTop <= scrollPos + 120) currentIndex = i;
+        });
+
+        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+          e.preventDefault();
+          const next = sections[Math.min(currentIndex + 1, sections.length - 1)];
+          if (next) next.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+          e.preventDefault();
+          const prev = sections[Math.max(currentIndex - 1, 0)];
+          if (prev) prev.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+
+    // ---------- ensure top progress initialized ----------
+    updateTopProgress();
+  
+  </script>
+</body>
+</html>
